@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap');
+
+:root {
+	font-family: Comfortaa, sans-serif;
+	--text-base-color: #1d3557;
+	--text-50-color: #8e9aab;
+
+	--primary-color: #457b9d;
+	--primary-10-color: #ecf2f5;
+
+	--secondary-base-color: #a8dadc;
+	--secondary-25-color: #e9f6f6;
+
+	--success-base-color: #0b7a75;
+	--danger-base-color: #e63946;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	font-weight: 400;
+}
+
+body {
+	color: var(--text-base-color);
+}
+
+input {
+	border: none;
+	outline: none;
+}
+
+h1 {
+	font-size: 4rem;
+	font-weight: 700;
+	text-align: center;
+}
