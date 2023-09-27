@@ -1,3 +1,9 @@
+<script lang="ts">
+	import type { Todo } from '$lib/types';
+
+	export let todo: Todo;
+</script>
+
 <div class="todo">
 	<form action="" method="">
 		<input type="hidden" name="done" value="" />
@@ -5,7 +11,7 @@
 	</form>
 
 	<form action="" method="" class="edit">
-		<input type="text" class="text" />
+		<input type="text" class="text" value={todo.description} />
 		<button aria-label="Save todo" class="save" />
 	</form>
 
@@ -70,18 +76,18 @@
 
 	.save {
 		margin-right: 14px;
-		background-image: url('../icons/save.svg');
+		background-image: url('$lib/icons/save.svg');
 	}
 
 	.save:hover {
-		background-image: url('../icons/save-filled.svg');
+		background-image: url('$lib/icons/save-filled.svg');
 	}
 
 	.delete {
-		background-image: url('../icons/delete.svg');
+		background-image: url('$lib/icons/delete.svg');
 	}
 
 	.delete:hover {
-		background-image: url('../icons/delete-forever.svg');
+		background-image: url('$lib/icons/delete-forever.svg');
 	}
 </style>
