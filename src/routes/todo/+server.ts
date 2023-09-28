@@ -1,30 +1,27 @@
 import type { RequestHandler } from '@sveltejs/kit';
-import type { Todo } from '$lib/types';
 import { json } from '@sveltejs/kit';
 
-/**
- * TODO persist in database
- */
-const todos: Todo[] = [];
+import * as database from '$lib/server/database';
 
 export const GET: RequestHandler = () => {
-	return json(todos);
+	return json(database.getTodos());
 };
 
 export const POST: RequestHandler = async ({ request }) => {
 	const data = await request.formData();
 	const description = String(data.get('description'));
 
-	todos.push({
-		createdAt: new Date(),
-		description,
-		done: false
+	const { id } = await database.createTodo({
+		description
 	});
 
-	return json(description, {
-		status: 303,
-		headers: {
-			location: '/'
+	return json(
+		{ id },
+		{
+			status: 303,
+			headers: {
+				location: '/'
+			}
 		}
-	});
+	);
 };

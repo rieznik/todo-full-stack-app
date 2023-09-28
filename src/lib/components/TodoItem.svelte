@@ -15,7 +15,7 @@
 		<button aria-label="Save todo" class="save" />
 	</form>
 
-	<form action="" method="">
+	<form action="/todo/{todo.id}?_method=delete" method="POST">
 		<button aria-label="Delete todo" class="delete" />
 	</form>
 </div>
