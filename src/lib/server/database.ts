@@ -22,6 +22,15 @@ export const createTodo = ({ description }: { description: string }) => {
 	return { id };
 };
 
+export const editTodo = ({ id, description }: { id: string; description: string }) => {
+	todos = todos.map((todo) => {
+		if (todo.id === id) {
+			todo.description = description;
+		}
+		return todo;
+	});
+};
+
 export const deleteTodo = (id: string) => {
 	todos = todos.filter((todo) => todo.id !== id);
 };

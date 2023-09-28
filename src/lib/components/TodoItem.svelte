@@ -10,8 +10,8 @@
 		<button aria-label="Mark done/not done" class="toggle checked" />
 	</form>
 
-	<form action="" method="" class="edit">
-		<input type="text" class="text" value={todo.description} />
+	<form action="/todo/{todo.id}" method="POST" class="edit">
+		<input name="description" type="text" class="text" value={todo.description} />
 		<button aria-label="Save todo" class="save" />
 	</form>
 

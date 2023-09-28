@@ -7,6 +7,17 @@ export const DELETE: RequestHandler = async ({ params }) => {
 
 	await database.deleteTodo(id);
 
+	return json({ success: true });
+};
+
+export const POST: RequestHandler = async ({ params, request }) => {
+	const id = String(params.id);
+	const data = await request.formData();
+	console.log('data', data);
+	const description = String(data.get('description'));
+
+	await database.editTodo({ id, description });
+
 	return json(
 		{ success: true },
 		{
