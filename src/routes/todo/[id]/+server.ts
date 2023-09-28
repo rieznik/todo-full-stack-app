@@ -13,10 +13,10 @@ export const DELETE: RequestHandler = async ({ params }) => {
 export const POST: RequestHandler = async ({ params, request }) => {
 	const id = String(params.id);
 	const data = await request.formData();
-	console.log('data', data);
-	const description = String(data.get('description'));
+	const description = data.get('description');
+	const done = data.get('done');
 
-	await database.editTodo({ id, description });
+	await database.editTodo({ id, description, done });
 
 	return json(
 		{ success: true },

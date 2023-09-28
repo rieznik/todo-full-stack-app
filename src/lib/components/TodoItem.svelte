@@ -5,9 +5,13 @@
 </script>
 
 <div class="todo">
-	<form action="" method="">
-		<input type="hidden" name="done" value="" />
-		<button aria-label="Mark done/not done" class="toggle checked" />
+	<form action="/todo/{todo.id}" method="POST">
+		<input type="hidden" name="done" value={todo.done ? '' : 'true'} />
+		<button
+			aria-label="Mark todo as {todo.done ? 'not done' : 'done'}"
+			class="toggle"
+			class:checked={todo.done}
+		/>
 	</form>
 
 	<form action="/todo/{todo.id}" method="POST" class="edit">
@@ -25,9 +29,12 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		box-shadow: 0px 2px 10px 0px #e9f6f6;
 		padding: 14px;
 		border-radius: 12px;
+	}
+
+	.todo:hover {
+		box-shadow: 0px 2px 10px 0px #e9f6f6;
 	}
 
 	.toggle {
@@ -75,12 +82,17 @@
 	}
 
 	.save {
+		visibility: hidden;
 		margin-right: 14px;
 		background-image: url('$lib/icons/save.svg');
 	}
 
 	.save:hover {
 		background-image: url('$lib/icons/save-filled.svg');
+	}
+
+	.text:focus-visible + .save {
+		visibility: visible;
 	}
 
 	.delete {

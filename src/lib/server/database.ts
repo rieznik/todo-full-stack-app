@@ -22,10 +22,22 @@ export const createTodo = ({ description }: { description: string }) => {
 	return { id };
 };
 
-export const editTodo = ({ id, description }: { id: string; description: string }) => {
+export const editTodo = ({
+	id,
+	description,
+	done
+}: {
+	id: string;
+	description: FormDataEntryValue | null;
+	done: FormDataEntryValue | null;
+}) => {
 	todos = todos.map((todo) => {
 		if (todo.id === id) {
-			todo.description = description;
+			if (description) {
+				todo.description = String(description);
+			} else {
+				todo.done = !!done;
+			}
 		}
 		return todo;
 	});
