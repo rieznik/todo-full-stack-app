@@ -1,6 +1,8 @@
 <script lang="ts">
 	import TodoItem from '$lib/components/TodoItem.svelte';
 
+	import { enhance } from '$app/forms';
+
 	export let data;
 	export let form;
 
@@ -14,7 +16,7 @@
 <div class="wrapper">
 	<h1 class="title">{title}</h1>
 
-	<form action="?/addTodo" method="POST" class="new" class:required={form?.missing}>
+	<form action="?/addTodo" method="POST" class="new" class:required={form?.missing} use:enhance>
 		<input
 			type="text"
 			name="text"

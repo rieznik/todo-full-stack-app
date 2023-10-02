@@ -1,11 +1,15 @@
 <script lang="ts">
 	import type { Todo } from '$lib/types';
 
+	import { fly, fade } from 'svelte/transition';
+	import { quintOut } from 'svelte/easing';
+	import { enhance } from '$app/forms';
+
 	export let todo: Todo;
 </script>
 
-<div class="todo">
-	<form action="?/toggleTodo" method="POST">
+<div class="todo" in:fly={{ y: 20 }} out:fade={{ delay: 3000, duration: 300 }}>
+	<form action="?/toggleTodo" method="POST" use:enhance>
 		<input type="hidden" name="id" value={todo.id} />
 		<button
 			aria-label="Mark todo as {todo.done ? 'not done' : 'done'}"
