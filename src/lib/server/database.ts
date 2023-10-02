@@ -9,40 +9,35 @@ export const getTodos = () => {
 	return todos;
 };
 
-export const createTodo = ({ description }: { description: string }) => {
+export const createTodo = ({ text }: { text: string }) => {
 	const id = `${Date.now()}`; // TODO replace with the UUID from the database
 
 	todos.push({
 		id,
 		createdAt: new Date(),
-		description,
+		text,
 		done: false
 	});
-
-	return { id };
 };
 
-export const editTodo = ({
-	id,
-	description,
-	done
-}: {
-	id: string;
-	description: FormDataEntryValue | null;
-	done: FormDataEntryValue | null;
-}) => {
+export const editTodo = ({ id, text }: { id: string; text: string }) => {
 	todos = todos.map((todo) => {
 		if (todo.id === id) {
-			if (description) {
-				todo.description = String(description);
-			} else {
-				todo.done = !!done;
-			}
+			todo.text = String(text);
 		}
 		return todo;
 	});
 };
 
-export const deleteTodo = (id: string) => {
+export const toggleTodo = ({ id }: { id: string }) => {
+	todos = todos.map((todo) => {
+		if (todo.id === id) {
+			todo.done = !todo.done;
+		}
+		return todo;
+	});
+};
+
+export const deleteTodo = ({ id }: { id: string }) => {
 	todos = todos.filter((todo) => todo.id !== id);
 };

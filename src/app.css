@@ -6,7 +6,7 @@
 	--text-50-color: #8e9aab;
 
 	--primary-color: #457b9d;
-	--primary-10-color: #ecf2f5;
+	--primary-5-color: #f6f8fa;
 
 	--secondary-base-color: #a8dadc;
 	--secondary-25-color: #e9f6f6;
@@ -19,6 +19,7 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	position: relative;
 }
 
 html {
