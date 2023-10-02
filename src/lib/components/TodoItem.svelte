@@ -5,8 +5,8 @@
 </script>
 
 <div class="todo">
-	<form action="/todo/{todo.id}" method="POST">
-		<input type="hidden" name="done" value={todo.done ? '' : 'true'} />
+	<form action="?/toggleTodo" method="POST">
+		<input type="hidden" name="id" value={todo.id} />
 		<button
 			aria-label="Mark todo as {todo.done ? 'not done' : 'done'}"
 			class="toggle"
@@ -14,13 +14,11 @@
 		/>
 	</form>
 
-	<form action="/todo/{todo.id}" method="POST" class="edit">
-		<input name="description" type="text" class="text" value={todo.description} />
+	<form action="?/editTodo" method="POST" class="edit">
+		<input type="hidden" name="id" value={todo.id} />
+		<input name="text" type="text" class="text" value={todo.text} />
 		<button aria-label="Save todo" class="save" />
-	</form>
-
-	<form action="/todo/{todo.id}?_method=delete" method="POST">
-		<button aria-label="Delete todo" class="delete" />
+		<button formaction="?/deleteTodo" aria-label="Delete todo" class="delete" />
 	</form>
 </div>
 
