@@ -1,43 +1,65 @@
-import type { Todo } from '$lib/types';
+import { PrismaClient } from '@prisma/client';
 
-/**
- * TODO persist in database
- */
-let todos: Todo[] = [];
+const prisma = new PrismaClient();
 
-export const getTodos = () => {
+export const getTodos = async () => {
+	const todos = await prisma.todo.findMany();
+
 	return todos;
 };
 
-export const createTodo = ({ text }: { text: string }) => {
-	const id = `${Date.now()}`; // TODO replace with the UUID from the database
-
-	todos.push({
-		id,
-		createdAt: new Date(),
-		text,
-		done: false
-	});
-};
-
-export const editTodo = ({ id, text }: { id: string; text: string }) => {
-	todos = todos.map((todo) => {
-		if (todo.id === id) {
-			todo.text = String(text);
+export const createTodo = async ({ text }: { text: string }) => {
+	const todo = await prisma.todo.create({
+		data: {
+			createdAt: new Date(),
+			done: false,
+			text
 		}
-		return todo;
 	});
+
+	return todo;
 };
 
-export const toggleTodo = ({ id }: { id: string }) => {
-	todos = todos.map((todo) => {
-		if (todo.id === id) {
-			todo.done = !todo.done;
+export const editTodo = async ({ id, text }: { id: string; text: string }) => {
+	const result = await prisma.todo.update({
+		where: {
+			id: id
+		},
+		data: {
+			text: text
 		}
-		return todo;
 	});
+
+	return result;
 };
 
-export const deleteTodo = ({ id }: { id: string }) => {
-	todos = todos.filter((todo) => todo.id !== id);
+export const toggleTodo = async ({ id }: { id: string }) => {
+	const todo = await prisma.todo.findUnique({
+		where: { id }
+	});
+
+	const result = await prisma.todo.update({
+		where: {
+			id
+		},
+		data: {
+			done: !todo?.done
+		}
+	});
+
+	return result;
+};
+
+export const deleteTodo = async ({ id }: { id: string }) => {
+	console.log('id', id);
+
+	const result = await prisma.todo.delete({
+		where: {
+			id
+		}
+	});
+
+	console.log('result', result);
+
+	return result;
 };

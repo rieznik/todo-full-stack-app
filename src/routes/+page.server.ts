@@ -18,7 +18,7 @@ export const actions = {
 			return fail(400, { text, missing: true });
 		}
 
-		createTodo({
+		await createTodo({
 			text
 		});
 
@@ -29,7 +29,7 @@ export const actions = {
 		const id = String(formData.get('id'));
 		const text = String(formData.get('text'));
 
-		editTodo({ id, text });
+		await editTodo({ id, text });
 
 		return { success: true };
 	},
@@ -37,7 +37,7 @@ export const actions = {
 		const formData = await request.formData();
 		const id = String(formData.get('id'));
 
-		toggleTodo({ id });
+		await toggleTodo({ id });
 
 		return { success: true };
 	},
@@ -45,7 +45,7 @@ export const actions = {
 		const formData = await request.formData();
 		const id = String(formData.get('id'));
 
-		deleteTodo({ id });
+		await deleteTodo({ id });
 
 		return { success: true };
 	}
