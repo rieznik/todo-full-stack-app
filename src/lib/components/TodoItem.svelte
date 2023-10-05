@@ -8,7 +8,7 @@
 	export let todo: Todo;
 </script>
 
-<div class="todo" in:fly={{ y: 20 }} out:fade={{ delay: 3000, duration: 300 }}>
+<div class="todo" in:fly={{ y: 20 }} out:fade={{ duration: 1000 }}>
 	<form action="?/toggleTodo" method="POST" use:enhance>
 		<input type="hidden" name="id" value={todo.id} />
 		<button
