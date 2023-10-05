@@ -29,7 +29,7 @@
 		{/if}
 	</form>
 
-	{#each data.todos as todo (todo.id)}
+	{#each data.todos as todo}
 		<TodoItem {todo} />
 	{/each}
 </div>
