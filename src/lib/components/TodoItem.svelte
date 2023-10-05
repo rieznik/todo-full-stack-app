@@ -2,7 +2,6 @@
 	import type { Todo } from '$lib/types';
 
 	import { fly, fade } from 'svelte/transition';
-	import { quintOut } from 'svelte/easing';
 	import { enhance } from '$app/forms';
 
 	export let todo: Todo;

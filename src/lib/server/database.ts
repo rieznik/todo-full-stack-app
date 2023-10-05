@@ -24,6 +24,16 @@ export const getTodos = async ({ userId }: { userId: string }) => {
 };
 
 export const createTodo = async ({ userId, text }: { userId: string; text: string }) => {
+	if (text === '') {
+		throw new Error("Please enter todo's text");
+	}
+
+	const todos = await getTodos({ userId });
+
+	if (todos.find((todo) => todo.text === text)) {
+		throw new Error('You already have this todo in the list');
+	}
+
 	const todo = await prisma.todo.create({
 		data: {
 			createdAt: new Date(),

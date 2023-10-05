@@ -24,8 +24,8 @@
 			placeholder="Create new task"
 			autocomplete="off"
 		/>
-		{#if form?.missing}
-			<p class="error">Please enter todo's text</p>
+		{#if form?.error}
+			<p class="error">{form.error}</p>
 		{/if}
 	</form>
 

@@ -30,14 +30,20 @@ export const actions = {
 		const formData = await request.formData();
 		const text = String(formData.get('text'));
 
-		if (!text) {
-			return fail(400, { text, missing: true });
+		try {
+			await createTodo({
+				userId,
+				text
+			});
+		} catch (error) {
+			if (error instanceof Error) {
+				return fail(422, {
+					error: error.message
+				});
+			} else {
+				throw new Error(String(error));
+			}
 		}
-
-		await createTodo({
-			userId,
-			text
-		});
 
 		return { success: true };
 	},
