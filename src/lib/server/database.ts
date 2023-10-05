@@ -3,7 +3,11 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export const getTodos = async () => {
-	const todos = await prisma.todo.findMany();
+	const todos = await prisma.todo.findMany({
+		orderBy: {
+			createdAt: 'asc'
+		}
+	});
 
 	return todos;
 };
