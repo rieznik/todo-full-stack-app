@@ -1,26 +1,49 @@
 import type { PageServerLoad, Actions } from './$types';
 import { fail } from '@sveltejs/kit';
 
-import { getTodos, createTodo, editTodo, toggleTodo, deleteTodo } from '$lib/server/database';
+import {
+	createUser,
+	getTodos,
+	createTodo,
+	editTodo,
+	toggleTodo,
+	deleteTodo
+} from '$lib/server/database';
 
-export const load: PageServerLoad = async () => {
-	const todos = getTodos();
+export const load: PageServerLoad = async ({ cookies }) => {
+	let userId = cookies.get('userid');
+
+	if (!userId) {
+		const { id } = await createUser();
+		userId = id;
+		cookies.set('userid', id, { path: '/' });
+	}
+
+	const todos = getTodos({ userId }) ?? [];
 
 	return { todos };
 };
 
 export const actions = {
-	addTodo: async ({ request }) => {
+	addTodo: async ({ cookies, request }) => {
+		const userId = String(cookies.get('userid'));
 		const formData = await request.formData();
 		const text = String(formData.get('text'));
 
-		if (!text) {
-			return fail(400, { text, missing: true });
+		try {
+			await createTodo({
+				userId,
+				text
+			});
+		} catch (error) {
+			if (error instanceof Error) {
+				return fail(422, {
+					error: error.message
+				});
+			} else {
+				throw new Error(String(error));
+			}
 		}
-
-		await createTodo({
-			text
-		});
 
 		return { success: true };
 	},

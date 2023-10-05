@@ -16,7 +16,7 @@
 <div class="wrapper">
 	<h1 class="title">{title}</h1>
 
-	<form action="?/addTodo" method="POST" class="new" class:required={form?.missing} use:enhance>
+	<form action="?/addTodo" method="POST" class="new" class:required={form?.error} use:enhance>
 		<input
 			type="text"
 			name="text"
@@ -24,8 +24,8 @@
 			placeholder="Create new task"
 			autocomplete="off"
 		/>
-		{#if form?.missing}
-			<p class="error">Please enter todo's text</p>
+		{#if form?.error}
+			<p class="error">{form.error}</p>
 		{/if}
 	</form>
 

@@ -2,8 +2,19 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export const getTodos = async () => {
+export const createUser = async () => {
+	const userId = await prisma.user.create({
+		data: {}
+	});
+
+	return userId;
+};
+
+export const getTodos = async ({ userId }: { userId: string }) => {
 	const todos = await prisma.todo.findMany({
+		where: {
+			userId
+		},
 		orderBy: {
 			createdAt: 'asc'
 		}
@@ -12,12 +23,23 @@ export const getTodos = async () => {
 	return todos;
 };
 
-export const createTodo = async ({ text }: { text: string }) => {
+export const createTodo = async ({ userId, text }: { userId: string; text: string }) => {
+	if (text === '') {
+		throw new Error("Please enter todo's text");
+	}
+
+	const todos = await getTodos({ userId });
+
+	if (todos.find((todo) => todo.text === text)) {
+		throw new Error('You already have this todo in the list');
+	}
+
 	const todo = await prisma.todo.create({
 		data: {
 			createdAt: new Date(),
 			done: false,
-			text
+			text,
+			userId
 		}
 	});
 
@@ -33,7 +55,6 @@ export const editTodo = async ({ id, text }: { id: string; text: string }) => {
 			text: text
 		}
 	});
-
 	return result;
 };
 
@@ -55,15 +76,11 @@ export const toggleTodo = async ({ id }: { id: string }) => {
 };
 
 export const deleteTodo = async ({ id }: { id: string }) => {
-	console.log('id', id);
-
 	const result = await prisma.todo.delete({
 		where: {
 			id
 		}
 	});
-
-	console.log('result', result);
 
 	return result;
 };
