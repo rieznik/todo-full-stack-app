@@ -1,13 +1,13 @@
 <script lang="ts">
 	import type { Todo } from '$lib/types';
 
-	import { fly, fade } from 'svelte/transition';
+	import { fly, slide } from 'svelte/transition';
 	import { enhance } from '$app/forms';
 
 	export let todo: Todo;
 </script>
 
-<div class="todo" in:fly={{ y: 20 }} out:fade={{ duration: 1000 }}>
+<div class="todo" in:fly={{ y: 20 }} out:slide>
 	<form action="?/toggleTodo" method="POST" use:enhance>
 		<input type="hidden" name="id" value={todo.id} />
 		<button
@@ -17,7 +17,7 @@
 		/>
 	</form>
 
-	<form action="?/editTodo" method="POST" class="edit">
+	<form action="?/editTodo" method="POST" class="edit" use:enhance>
 		<input type="hidden" name="id" value={todo.id} />
 		<input name="text" type="text" class="text" value={todo.text} />
 		<button aria-label="Save todo" class="save" />
